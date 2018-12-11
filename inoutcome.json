@@ -1,0 +1,22 @@
+{
+"11.12.2018": [
+{
+"type": "reciept",
+"operand": "anton",
+"summ": "100",
+"time": "1544450861"
+},
+{
+"type": "spend",
+"operand": "anton",
+"summ": "100",
+"time": "1544450861"
+},
+{
+"type": "loan",
+"operand": "anton",
+"summ": "100",
+"time": "1544450861"
+}
+]
+}
