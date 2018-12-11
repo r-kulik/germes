@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QLabel
 from main_ui import Ui_MainWindow
 import json
 import datetime
-from formathelper import ourformateDate
+from helper import ourformateDate, parser
 import time
 
 
@@ -30,6 +30,11 @@ class Example(QMainWindow, Ui_MainWindow):
 						  "Трата": "spend",
 						  "Взятие в долг": "borrow",
 						  "Предоставление долга": "loan"}
+		self.balance = 0
+		self.debt = 0
+		"""
+		Здесь реализовать функцию вычисления баланса и всего прочего из кэша
+		"""
 
 
 	def add_transaction(self):
@@ -44,8 +49,8 @@ class Example(QMainWindow, Ui_MainWindow):
 			written_dict["name"] = self.lineEdit.text()
 			written_dict["type"] = self.type_dict[self.combotext2]
 			written_dict["operand"] = self.combotext
-			written_dict["summ"] = int(self.lineEdit_2.text())
-			written_dict["time"] = str(int(round(time.time() * 1000)))
+			written_dict["summ"] = float(self.lineEdit_2.text())
+			written_dict["time"] = int(round(time.time() * 1000))
 		except Exception:
 			self.label_4.setText("Введите все или введите корректно")
 		else:
@@ -55,9 +60,22 @@ class Example(QMainWindow, Ui_MainWindow):
 				inoutcome_dictionary[current_date] = [written_dict]
 			# print(inoutcome_dictionary)
 			print(written_dict)
-			print(inoutcome_dictionary)
+			if written_dict["type"] == "spend":
+				self.balance -= written_dict["summ"]
+			elif written_dict["type"]  == "reciept":
+				self.balance += written_dict["summ"]
+			elif written_dict["type"] == "loan":
+				self.balance -= written_dict["summ"]
+				self.debt += written_dict["summ"]
+			elif written_dict["type"] == "borrow":
+				self.balance += written_dict["summ"]
+				self.balance -= written_dict["summ"]
+
+
+			# print(inoutcome_dictionary)
 			with open("inoutcome.json", 'w') as inoutcome:
 				json.dump(inoutcome_dictionary, inoutcome)
+		parser(self)
 
 	def combox2Active(self, text):
 		self.combotext2 = text
