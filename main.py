@@ -35,7 +35,8 @@ class Example(QMainWindow, Ui_MainWindow):
 		self.debt = init_tuple[1]
 		self.listWidget.addItems(init_tuple[2])
 		parser(self)
-		
+		self.pushButton_5.clicked.connect(self.clearCash)
+
 
 
 
@@ -117,6 +118,17 @@ class Example(QMainWindow, Ui_MainWindow):
 	def comboxActive(self, text2):
 		self.combotext = text2
 		print(self.combotext2, self.combotext)
+
+	def clearCash(self):
+		with open("inoutcome.json", 'w') as inoutcome:
+			inoutcome.write('{}')
+		init_tuple = rememberAll()
+		self.balance = init_tuple[0]
+		self.debt = init_tuple[1]
+		self.listWidget.clear()
+		self.listWidget.addItems(init_tuple[2])
+		parser(self)
+
 
 app = QApplication(sys.argv)
 ex = Example()
