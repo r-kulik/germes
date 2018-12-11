@@ -53,6 +53,9 @@ class Ui_MainWindow(object):
         self.label_3.setGeometry(QtCore.QRect(420, 140, 171, 16))
         self.label_3.setAlignment(QtCore.Qt.AlignCenter)
         self.label_3.setObjectName("label_3")
+        self.label_4 = QtWidgets.QLabel(self.centralwidget)
+        self.label_4.setGeometry(QtCore.QRect(10, 470, 61, 16))
+        self.label_4.setObjectName("label_4")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
@@ -74,4 +77,5 @@ class Ui_MainWindow(object):
         self.label.setText(_translate("MainWindow", "Название транзакции"))
         self.label_2.setText(_translate("MainWindow", "Укажите тип"))
         self.label_3.setText(_translate("MainWindow", "Категория"))
+        self.label_4.setText(_translate("MainWindow", "TextLabel"))
 
