@@ -47,11 +47,14 @@
    <widget class="QLCDNumber" name="lcdNumber">
     <property name="geometry">
      <rect>
-      <x>593</x>
+      <x>173</x>
       <y>20</y>
-      <width>161</width>
+      <width>581</width>
       <height>61</height>
      </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton">
@@ -167,14 +170,14 @@
    <widget class="QPushButton" name="pushButton_4">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>180</y>
-      <width>171</width>
+      <x>470</x>
+      <y>170</y>
+      <width>141</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>Добавить категорию</string>
+     <string>Редактировать</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_5">
@@ -188,16 +191,6 @@
     </property>
     <property name="text">
      <string>Баланс</string>
-    </property>
-   </widget>
-   <widget class="QListView" name="listView">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>170</y>
-      <width>256</width>
-      <height>261</height>
-     </rect>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEdit_2">
@@ -224,6 +217,29 @@
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_5">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>400</y>
+      <width>181</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Очистить кэш</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="listWidget">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>170</y>
+      <width>256</width>
+      <height>251</height>
+     </rect>
     </property>
    </widget>
   </widget>

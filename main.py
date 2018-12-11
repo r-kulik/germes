@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QLabel
 from main_ui import Ui_MainWindow
 import json
 import datetime
-from helper import ourformateDate, parser
+from helper import ourformateDate, parser, boolean, rememberAll
 import time
 
 
@@ -30,11 +30,13 @@ class Example(QMainWindow, Ui_MainWindow):
 						  "Трата": "spend",
 						  "Взятие в долг": "borrow",
 						  "Предоставление долга": "loan"}
-		self.balance = 0
-		self.debt = 0
-		"""
-		Здесь реализовать функцию вычисления баланса и всего прочего из кэша
-		"""
+		init_tuple = rememberAll()
+		self.balance = init_tuple[0]
+		self.debt = init_tuple[1]
+		self.listWidget.addItems(init_tuple[2])
+		parser(self)
+		
+
 
 
 	def add_transaction(self):
@@ -76,6 +78,13 @@ class Example(QMainWindow, Ui_MainWindow):
 			with open("inoutcome.json", 'w') as inoutcome:
 				json.dump(inoutcome_dictionary, inoutcome)
 		parser(self)
+		short_report = ' '.join([current_date,
+								 written_dict["name"],
+								 boolean(written_dict["type"]),
+								 str(written_dict["summ"])])
+		self.listWidget.clear()
+		self.listWidget.addItems(rememberAll()[2])
+
 
 	def combox2Active(self, text):
 		self.combotext2 = text
