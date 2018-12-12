@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QLabel
 from main_ui import Ui_MainWindow
 import json
 import datetime
-from helper import ourformateDate, parser, boolean, rememberAll
+from helper import ourformateDate, parser, boolean, rememberAll, toDate
 import time
 import os
 from PyQt5.QtWidgets import QInputDialog
@@ -50,7 +50,7 @@ class Example(QMainWindow, Ui_MainWindow):
 			a = inoutcome.read()
 			inoutcome_dictionary = json.loads(a)
 			# print(inoutcome_dictionary)
-		current_date = ourformateDate(str(datetime.datetime.now()))
+		current_time = str(time.time())
 		written_dict = {}
 		# print(inoutcome_dictionary)
 		try:
@@ -58,18 +58,16 @@ class Example(QMainWindow, Ui_MainWindow):
 			written_dict["type"] = self.type_dict[self.combotext2]
 			written_dict["operand"] = self.combotext
 			written_dict["summ"] = float(self.lineEdit_2.text())
-			written_dict["time"] = int(round(time.time() * 1000))
 		except Exception:
 			self.label_4.setText("Введите все или введите корректно")
 		else:
 			self.label_4.setText(self.current_version)
-			if current_date in inoutcome_dictionary:
-				inoutcome_dictionary[current_date].append(written_dict)
-			else:
-				inoutcome_dictionary[current_date] = [written_dict]
+			if current_time in inoutcome_dictionary:
+				current_time += 1
+			inoutcome_dictionary[current_time] = written_dict
 			# print(inoutcome_dictionary)
 			# print(written_dict)
-			# print(written_dict["type"])
+			# print(written_dict["type"])["summ"]
 			if written_dict["type"] == "spend":
 				self.balance -= written_dict["summ"]
 			elif written_dict["type"]  == "reciept":
@@ -92,16 +90,16 @@ class Example(QMainWindow, Ui_MainWindow):
 		try:
 			# print(self.balance, self.debt)
 			parser(self)
-			short_report = ' '.join([current_date,
+			short_report = ' '.join([toDate(current_time),
 								 	written_dict["name"],
 								 	boolean(written_dict["type"]),
 								 	str(written_dict["summ"])])
 			self.listWidget.clear()
 			self.listWidget.addItems(rememberAll()[2])
 			self.label_4.setText(self.current_version)
-		except Exception:
-			self.label_4.setText("Введите все или введите корректно")
 
+		except KeyboardInterrupt:
+			pass
 
 	def combox2Active(self, text):
 		self.combotext2 = text
