@@ -9,6 +9,8 @@ import datetime
 from helper import ourformateDate, parser, boolean, rememberAll
 import time
 import os
+from PyQt5.QtWidgets import QInputDialog
+import random
 
 
 
@@ -84,13 +86,16 @@ class Example(QMainWindow, Ui_MainWindow):
 			# print(inoutcome_dictionary)
 			with open("inoutcome.json", 'w') as inoutcome:
 				json.dump(inoutcome_dictionary, inoutcome)
-		parser(self)
-		short_report = ' '.join([current_date,
-								 written_dict["name"],
-								 boolean(written_dict["type"]),
-								 str(written_dict["summ"])])
-		self.listWidget.clear()
-		self.listWidget.addItems(rememberAll()[2])
+		try:
+			parser(self)
+			short_report = ' '.join([current_date,
+								 	written_dict["name"],
+								 	boolean(written_dict["type"]),
+								 	str(written_dict["summ"])])
+			self.listWidget.clear()
+			self.listWidget.addItems(rememberAll()[2])
+		except Exception:
+			self.label_4.setText("Введите все или введите корректно")
 
 
 	def combox2Active(self, text):
@@ -123,14 +128,25 @@ class Example(QMainWindow, Ui_MainWindow):
 		print(self.combotext2, self.combotext)
 
 	def clearCash(self):
-		with open("inoutcome.json", 'w') as inoutcome:
-			inoutcome.write('{}')
-		init_tuple = rememberAll()
-		self.balance = init_tuple[0]
-		self.debt = init_tuple[1]
-		self.listWidget.clear()
-		self.listWidget.addItems(init_tuple[2])
-		parser(self)
+		s1 = random.randint(1, 11)
+		s2 = random.randint(1, 11)
+		summ = s1 + s2
+		i, okBtnPressed = QInputDialog.getInt(self,
+											  "Вы действительно хотите удалить все?",
+											  "Сколько будет " + str(s1) + '+' + str(s2),
+											  0, 0, 100, 1)
+		if okBtnPressed:
+			if i == summ:
+				with open("inoutcome.json", 'w') as inoutcome:
+					inoutcome.write('{}')
+				init_tuple = rememberAll()
+				self.balance = init_tuple[0]
+				self.debt = init_tuple[1]
+				self.listWidget.clear()
+				self.listWidget.addItems(init_tuple[2])
+				parser(self)
+			else:
+				self.label_4.setText('Неправильно решен пример лол')
 
 
 app = QApplication(sys.argv)
