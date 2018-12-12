@@ -13,17 +13,14 @@ from PyQt5.QtWidgets import QInputDialog
 import random
 
 
-
-
-
 class Example(QMainWindow, Ui_MainWindow):
 	
 	def __init__(self):
-		current_version = '0.1'
+		self.current_version = '0.2'
 		super().__init__()
 		self.setupUi(self)
 		self.setWindowTitle("Гермес - Финансовый помощник")
-		self.label_4.setText(current_version)
+		self.label_4.setText(self.current_version)
 		self.pushButton.clicked.connect(self.add_transaction)
 		transaction_types = ['Заработок',
 							 'Трата',
@@ -55,7 +52,7 @@ class Example(QMainWindow, Ui_MainWindow):
 			# print(inoutcome_dictionary)
 		current_date = ourformateDate(str(datetime.datetime.now()))
 		written_dict = {}
-		print(inoutcome_dictionary)
+		# print(inoutcome_dictionary)
 		try:
 			written_dict["name"] = self.lineEdit.text()
 			written_dict["type"] = self.type_dict[self.combotext2]
@@ -65,12 +62,14 @@ class Example(QMainWindow, Ui_MainWindow):
 		except Exception:
 			self.label_4.setText("Введите все или введите корректно")
 		else:
+			self.label_4.setText(self.current_version)
 			if current_date in inoutcome_dictionary:
 				inoutcome_dictionary[current_date].append(written_dict)
 			else:
 				inoutcome_dictionary[current_date] = [written_dict]
 			# print(inoutcome_dictionary)
-			print(written_dict)
+			# print(written_dict)
+			# print(written_dict["type"])
 			if written_dict["type"] == "spend":
 				self.balance -= written_dict["summ"]
 			elif written_dict["type"]  == "reciept":
@@ -79,14 +78,19 @@ class Example(QMainWindow, Ui_MainWindow):
 				self.balance -= written_dict["summ"]
 				self.debt += written_dict["summ"]
 			elif written_dict["type"] == "borrow":
-				self.balance += written_dict["summ"]
-				self.balance -= written_dict["summ"]
+				# print('DONE')
+				# print(self.balance, self.debt)
+				# print(written_dict["summ"])
+				self.balance = self.balance + written_dict["summ"]
+				self.debt = self.debt - written_dict["summ"]
+				# print(self.balance, self.debt)
 
 
 			# print(inoutcome_dictionary)
 			with open("inoutcome.json", 'w') as inoutcome:
 				json.dump(inoutcome_dictionary, inoutcome)
 		try:
+			# print(self.balance, self.debt)
 			parser(self)
 			short_report = ' '.join([current_date,
 								 	written_dict["name"],
@@ -94,6 +98,7 @@ class Example(QMainWindow, Ui_MainWindow):
 								 	str(written_dict["summ"])])
 			self.listWidget.clear()
 			self.listWidget.addItems(rememberAll()[2])
+			self.label_4.setText(self.current_version)
 		except Exception:
 			self.label_4.setText("Введите все или введите корректно")
 
@@ -125,7 +130,7 @@ class Example(QMainWindow, Ui_MainWindow):
 
 	def comboxActive(self, text2):
 		self.combotext = text2
-		print(self.combotext2, self.combotext)
+		# print(self.combotext2, self.combotext)
 
 	def clearCash(self):
 		s1 = random.randint(1, 11)

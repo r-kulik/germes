@@ -52,7 +52,7 @@ class Ui_MainWindow(object):
         self.label_3.setAlignment(QtCore.Qt.AlignCenter)
         self.label_3.setObjectName("label_3")
         self.label_4 = QtWidgets.QLabel(self.centralwidget)
-        self.label_4.setGeometry(QtCore.QRect(10, 470, 61, 16))
+        self.label_4.setGeometry(QtCore.QRect(10, 470, 391, 16))
         self.label_4.setObjectName("label_4")
         self.pushButton_4 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_4.setGeometry(QtCore.QRect(470, 170, 141, 23))
