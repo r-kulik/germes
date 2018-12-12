@@ -8,6 +8,9 @@ import json
 import datetime
 from helper import ourformateDate, parser, boolean, rememberAll
 import time
+import os
+
+
 
 
 
@@ -36,8 +39,11 @@ class Example(QMainWindow, Ui_MainWindow):
 		self.listWidget.addItems(init_tuple[2])
 		parser(self)
 		self.pushButton_5.clicked.connect(self.clearCash)
+		self.pushButton_4.clicked.connect(self.showSettings)
 
 
+	def showSettings(self):
+		os.popen("typesettingswindow.py")
 
 
 	def add_transaction(self):
@@ -89,31 +95,28 @@ class Example(QMainWindow, Ui_MainWindow):
 
 	def combox2Active(self, text):
 		self.combotext2 = text
+		with open('transaction_types.json', 'r', encoding='utf-8') as transaction_types_file:
+			transaction_types = json.loads(transaction_types_file.read())
 		if text == 'Заработок':
-			transaction_types_income = ['Зарплата',
-										'Стипендия',
-										'Пособие',
-										'Аренда',
-										'Другие типы дохода']
+			transaction_types_income = transaction_types["reciept"]
 			self.comboBox.clear()
 			self.comboBox.addItems(transaction_types_income)
 			self.comboBox.activated[str].connect(self.comboxActive)
 		elif text == 'Трата':
-			transaction_types_outcome = ['Еда',
-										 'Транспорт',
-										 'Развлечения',
-										 'ЖКХ и подобное',
-										 'Образование и курсы',
-										 'Ежемесячные траты',
-										 'Обновления и одежда']
+			transaction_types_outcome = transaction_types['spend']			
 			self.comboBox.clear()
 			self.comboBox.addItems(transaction_types_outcome)
 			self.comboBox.activated[str].connect(self.comboxActive)
 
-		else:
+		elif text == 'Взятие в долг':
 			self.comboBox.clear()
-			self.comboBox.addItem(text)
-			self.combotext = text
+			self.comboBox.addItems(transaction_types["borrow"])
+			self.comboBox.activated[str].connect(self.comboxActive)
+
+		elif text == 'Предоставление долга':
+			self.comboBox.clear()
+			self.comboBox.addItems(transaction_types["loan"])
+			self.comboBox.activated[str].connect(self.comboxActive)
 
 	def comboxActive(self, text2):
 		self.combotext = text2
