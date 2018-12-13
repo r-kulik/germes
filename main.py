@@ -39,11 +39,13 @@ class Example(QMainWindow, Ui_MainWindow):
 		parser(self)
 		self.pushButton_5.clicked.connect(self.clearCash)
 		self.pushButton_4.clicked.connect(self.showSettings)
+		self.pushButton_2.clicked.connect(self.showTransactionList)
 
+	def showTransactionList(self):
+		os.popen("transactionlist.py")
 
 	def showSettings(self):
 		os.popen("typesettingswindow.py")
-
 
 	def add_transaction(self):
 		with open("inoutcome.json") as inoutcome:
