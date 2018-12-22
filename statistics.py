@@ -86,6 +86,3 @@ def pie_diagram(counted_data): # круговая диаграмма расхо�
 
     plt.savefig("pie_diagram.png")
     return "pie_diagram.png"
-
-
-pie_diagram(count_all())
