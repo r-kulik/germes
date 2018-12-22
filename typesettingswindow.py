@@ -45,17 +45,20 @@ class TypeSettingsWindow(QMainWindow, SettingsUi_MainWindow):
 		self.currentgroup = 'loan'
 
 	def deleteType(self):
-		a = self.transaction_types[self.currentgroup].pop(self.transaction_types[self.currentgroup].index(self.listWidget.currentItem().text()))
-		with open('transaction_types.json', 'w', encoding='utf-8') as transaction_types_file:
-			json.dump(self.transaction_types, transaction_types_file)
-		if self.currentgroup == 'reciept': 
-			self.showReciepts()
-		elif self.currentgroup == 'spend':
-			self.showSpends()
-		elif self.currentgroup == 'borrow':
-			self.showBorrows()
-		elif self.currentgroup == 'loan':
-			self.showLoans()
+		try:
+			a = self.transaction_types[self.currentgroup].pop(self.transaction_types[self.currentgroup].index(self.listWidget.currentItem().text()))
+			with open('transaction_types.json', 'w', encoding='utf-8') as transaction_types_file:
+				json.dump(self.transaction_types, transaction_types_file)
+			if self.currentgroup == 'reciept': 
+				self.showReciepts()
+			elif self.currentgroup == 'spend':
+				self.showSpends()
+			elif self.currentgroup == 'borrow':
+				self.showBorrows()
+			elif self.currentgroup == 'loan':
+				self.showLoans()
+		except Exception:
+			exec('self.show' + self.currentgroup[0].upper() + self.currentgroup[1:] + 's()')
 
 	def addType(self):
 		i, okBtnPressed = QInputDialog.getText(

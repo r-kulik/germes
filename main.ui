@@ -67,20 +67,17 @@
      </rect>
     </property>
     <property name="text">
-     <string>Добавить</string>
+     <string/>
     </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_2">
-    <property name="geometry">
-     <rect>
-      <x>430</x>
-      <y>450</y>
-      <width>121</width>
+    <property name="icon">
+     <iconset>
+      <normaloff>pushButton.bmp</normaloff>pushButton.bmp</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>139</width>
       <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Список трат</string>
+     </size>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_3">
@@ -222,8 +219,8 @@
    <widget class="QPushButton" name="pushButton_5">
     <property name="geometry">
      <rect>
-      <x>570</x>
-      <y>400</y>
+      <x>370</x>
+      <y>450</y>
       <width>181</width>
       <height>23</height>
      </rect>

@@ -11,15 +11,29 @@ import time
 import os
 from PyQt5.QtWidgets import QInputDialog
 import random
-
+from PyQt5.QtGui import QImage, QPalette
+from PyQt5.QtGui import QBrush
+from PyQt5.QtCore import QSize
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
+from PyQt5.QtCore import *
 
 class Example(QMainWindow, Ui_MainWindow):
 	
+
+
 	def __init__(self):
 		self.current_version = '0.2'
 		super().__init__()
 		self.setupUi(self)
+		self.window_width = 800
+		self.window_height = 529
 		self.setWindowTitle("Гермес - Финансовый помощник")
+		fonImage = QImage("fon.jpg")
+		fonImage2 = fonImage.scaled(QSize(self.window_height, self.window_width))
+		palette = QPalette()
+		palette.setBrush(QPalette.Window, QBrush(fonImage2))
+		self.setPalette(palette)
 		self.label_4.setText(self.current_version)
 		self.pushButton.clicked.connect(self.add_transaction)
 		transaction_types = ['Заработок',
@@ -39,10 +53,7 @@ class Example(QMainWindow, Ui_MainWindow):
 		parser(self)
 		self.pushButton_5.clicked.connect(self.clearCash)
 		self.pushButton_4.clicked.connect(self.showSettings)
-		self.pushButton_2.clicked.connect(self.showTransactionList)
 
-	def showTransactionList(self):
-		os.popen("transactionlist.py")
 
 	def showSettings(self):
 		os.popen("typesettingswindow.py")
@@ -100,7 +111,7 @@ class Example(QMainWindow, Ui_MainWindow):
 			self.listWidget.addItems(rememberAll()[2])
 			self.label_4.setText(self.current_version)
 
-		except KeyboardInterrupt:
+		except Exception:
 			pass
 
 	def combox2Active(self, text):
