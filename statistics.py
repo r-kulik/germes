@@ -4,7 +4,7 @@ import json
 from_millis = datetime.datetime.fromtimestamp
 TODAY = datetime.datetime.today().strftime('%d-%m-%Y')
 TOMORROW = datetime.datetime.today() - datetime.timedelta(days=1)
-MONTH_AGO = datetime.datetime.today() - datetime.timedelta(month=1)
+MONTH_AGO = datetime.datetime.today() - datetime.timedelta(days=31)
 
 period_sample = {
     "spend": {  # просто траты
