@@ -1,5 +1,6 @@
 import datetime
 import json
+import matplotlib.pyplot as plt
 
 from_millis = datetime.datetime.fromtimestamp
 TODAY = datetime.datetime.today().strftime('%d-%m-%Y')
@@ -71,3 +72,20 @@ def datetime_human(data):  # тупо из datetime в формат day.month.ye
         "month": data.month,
         "day": data.day,
     })
+
+
+def pie_diagram(counted_data): # круговая диаграмма расходов за период
+    labels = 'Мне Должны', 'Потратил', 'Я должен', 'Получил'
+    sizes = [counted_data["loan"]["summ"], counted_data["spend"]["summ"], counted_data["borrow"]["summ"], counted_data["reciept"]["summ"]]
+    explode = (0.1, 0.1, 0.1, 0.1)
+
+    fig1, ax1 = plt.subplots()
+    ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
+            shadow=False, startangle=90)
+    ax1.axis('equal')
+
+    plt.savefig("pie_diagram.png")
+    return "pie_diagram.png"
+
+
+pie_diagram(count_all())
