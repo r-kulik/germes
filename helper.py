@@ -28,15 +28,15 @@ def rememberAll():
 		inoutcome_dictionary = json.loads(inoutcome.read())
 	for transaction in inoutcome_dictionary:
 		if inoutcome_dictionary[transaction]["type"] == 'reciept':
-			balance += inoutcome_dictionary[transaction]["summ"]
+			balance += int(inoutcome_dictionary[transaction]["summ"])
 		elif inoutcome_dictionary[transaction]["type"] == 'spend':
-			balance -= inoutcome_dictionary[transaction]["summ"]
+			balance -= int(inoutcome_dictionary[transaction]["summ"])
 		elif inoutcome_dictionary[transaction]["type"] == 'borrow':
-			balance += inoutcome_dictionary[transaction]["summ"]
-			debt -= inoutcome_dictionary[transaction]["summ"]
+			balance += int(inoutcome_dictionary[transaction]["summ"])
+			debt -= int(inoutcome_dictionary[transaction]["summ"])
 		elif inoutcome_dictionary[transaction]["type"] == "loan":
-			balance -= inoutcome_dictionary[transaction]["summ"]
-			debt += inoutcome_dictionary[transaction]["summ"]
+			balance -= int(inoutcome_dictionary[transaction]["summ"])
+			debt += int(inoutcome_dictionary[transaction]["summ"])
 
 		short_reports.append(' '.join([' '.join(toDate(transaction).split()[:3]),
 								 	   inoutcome_dictionary[transaction]["name"],
