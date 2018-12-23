@@ -1,6 +1,10 @@
 import datetime
 import json
+
 import matplotlib.pyplot as plt
+import numpy as np
+
+plt.rcdefaults()
 
 from_millis = datetime.datetime.fromtimestamp
 TODAY = datetime.datetime.today().strftime('%d-%m-%Y')
@@ -74,9 +78,10 @@ def datetime_human(data):  # тупо из datetime в формат day.month.ye
     })
 
 
-def pie_diagram(counted_data): # круговая диаграмма расходов за период
+def pie_diagram(counted_data, show=False):  # круговая диаграмма расходов за период
     labels = 'Мне Должны', 'Потратил', 'Я должен', 'Получил'
-    sizes = [counted_data["loan"]["summ"], counted_data["spend"]["summ"], counted_data["borrow"]["summ"], counted_data["reciept"]["summ"]]
+    sizes = [counted_data["loan"]["summ"], counted_data["spend"]["summ"], counted_data["borrow"]["summ"],
+             counted_data["reciept"]["summ"]]
     explode = (0.1, 0.1, 0.1, 0.1)
 
     fig1, ax1 = plt.subplots()
@@ -84,5 +89,31 @@ def pie_diagram(counted_data): # круговая диаграмма расхо�
             shadow=False, startangle=90)
     ax1.axis('equal')
 
+    if show:
+        plt.show()
+        return None
     plt.savefig("pie_diagram.png")
     return "pie_diagram.png"
+
+
+def horizontal_diagram(counted_data, show=False):
+    labels = 'Мне должны', 'Потратил', 'Я должен', 'Получил'
+    y_pos = np.arange(len(labels))
+    fig, ax = plt.subplots()
+    performance = np.asarray(
+        [counted_data["loan"]["summ"], counted_data["spend"]["summ"], counted_data["borrow"]["summ"],
+         counted_data["reciept"]["summ"]])
+    ax.barh(y_pos, performance, align='center',
+            color='green', ecolor='black')
+    ax.set_yticks(y_pos)
+    ax.set_yticklabels(labels)
+    plt.yticks(rotation=60)
+    ax.invert_yaxis()  # labels read top-to-bottom
+    ax.set_xlabel('Сумма в рублях')
+    ax.set_title('Сводка')
+
+    if show:
+        plt.show()
+        return None
+    plt.savefig("horizontal_diagram.png")
+    return "horizontal_diagram.png"
