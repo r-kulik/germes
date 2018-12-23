@@ -4,11 +4,9 @@ import json
 import matplotlib.pyplot as plt
 import numpy as np
 
-plt.rcdefaults()
-
 from_millis = datetime.datetime.fromtimestamp
-TODAY = datetime.datetime.today().strftime('%d-%m-%Y')
-TOMORROW = datetime.datetime.today() - datetime.timedelta(days=1)
+TODAY = datetime.datetime.today().strftime('%d.%m.%Y')
+YESTERDAY = datetime.datetime.today() - datetime.timedelta(days=1)
 MONTH_AGO = datetime.datetime.today() - datetime.timedelta(days=31)
 
 period_sample = {
@@ -78,42 +76,54 @@ def datetime_human(data):  # тупо из datetime в формат day.month.ye
     })
 
 
-def pie_diagram(counted_data, show=False):  # круговая диаграмма расходов за период
-    labels = 'Мне Должны', 'Потратил', 'Я должен', 'Получил'
-    sizes = [counted_data["loan"]["summ"], counted_data["spend"]["summ"], counted_data["borrow"]["summ"],
-             counted_data["reciept"]["summ"]]
-    explode = (0.1, 0.1, 0.1, 0.1)
+def pie_diagram(counted_data, hand = False, show=False):  # круговая диаграмма расходов за период
+    if hand:
+        with plt.xkcd():
+            pie_diagram(counted_data, show = show)
+    else:
+        labels = 'Мне Должны', 'Потратил', 'Я должен', 'Получил'
+        sizes = [counted_data["loan"]["summ"], counted_data["spend"]["summ"], counted_data["borrow"]["summ"],
+                 counted_data["reciept"]["summ"]]
+        explode = (0.1, 0.1, 0.1, 0.1)
 
-    fig1, ax1 = plt.subplots()
-    ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
-            shadow=False, startangle=90)
-    ax1.axis('equal')
+        fig1, ax1 = plt.subplots()
+        ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
+                shadow=False, startangle=90)
+        ax1.axis('equal')
 
     if show:
         plt.show()
+        plt.rcdefaults()
         return None
     plt.savefig("pie_diagram.png")
+    plt.rcdefaults()
     return "pie_diagram.png"
 
 
-def horizontal_diagram(counted_data, show=False):
-    labels = 'Мне должны', 'Потратил', 'Я должен', 'Получил'
-    y_pos = np.arange(len(labels))
-    fig, ax = plt.subplots()
-    performance = np.asarray(
-        [counted_data["loan"]["summ"], counted_data["spend"]["summ"], counted_data["borrow"]["summ"],
-         counted_data["reciept"]["summ"]])
-    ax.barh(y_pos, performance, align='center',
-            color='green', ecolor='black')
-    ax.set_yticks(y_pos)
-    ax.set_yticklabels(labels)
-    plt.yticks(rotation=60)
-    ax.invert_yaxis()  # labels read top-to-bottom
-    ax.set_xlabel('Сумма в рублях')
-    ax.set_title('Сводка')
+def horizontal_diagram(counted_data, hand = False, show=False):
+    if hand:
+        with plt.xkcd():
+            horizontal_diagram(counted_data, show = show)
+    else:
+        labels = 'Мне должны', 'Потратил', 'Я должен', 'Получил'
+        y_pos = np.arange(len(labels))
+        fig, ax = plt.subplots()
+        performance = np.asarray(
+            [counted_data["loan"]["summ"], counted_data["spend"]["summ"], counted_data["borrow"]["summ"],
+             counted_data["reciept"]["summ"]])
+        ax.barh(y_pos, performance, align='center',
+                color='green', ecolor='black')
+        ax.set_yticks(y_pos)
+        ax.set_yticklabels(labels)
+        plt.yticks(rotation=60)
+        ax.invert_yaxis()  # labels read top-to-bottom
+        ax.set_xlabel('Сумма в рублях')
+        ax.set_title('Сводка')
 
     if show:
         plt.show()
+        plt.rcdefaults()
         return None
     plt.savefig("horizontal_diagram.png")
+    plt.rcdefaults()
     return "horizontal_diagram.png"
