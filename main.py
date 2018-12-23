@@ -56,7 +56,7 @@ class Example(QMainWindow, Ui_MainWindow):
             a = inoutcome.read()
             inoutcome_dictionary = json.loads(a)
         # print(inoutcome_dictionary)
-        current_time = str(time.time())
+        current_time = int(time.time())
         written_dict = {}
         # print(inoutcome_dictionary)
         try:
@@ -68,9 +68,9 @@ class Example(QMainWindow, Ui_MainWindow):
             self.label_4.setText("Введите все или введите корректно")
         else:
             self.label_4.setText(self.current_version)
-            if current_time in inoutcome_dictionary:
+            if str(current_time) in inoutcome_dictionary:
                 current_time += 1
-            inoutcome_dictionary[current_time] = written_dict
+            inoutcome_dictionary[str(current_time)] = written_dict
             # print(inoutcome_dictionary)
             # print(written_dict)
             # print(written_dict["type"])["summ"]
@@ -95,7 +95,7 @@ class Example(QMainWindow, Ui_MainWindow):
         try:
             # print(self.balance, self.debt)
             parser(self)
-            short_report = ' '.join([toDate(current_time),
+            short_report = ' '.join([toDate(str(current_time)),
                                      written_dict["name"],
                                      boolean(written_dict["type"]),
                                      str(written_dict["summ"])])
