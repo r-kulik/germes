@@ -23,10 +23,7 @@ class Example(QMainWindow, Ui_MainWindow):
         self.window_width = 800
         self.window_height = 529
         self.setWindowTitle("Гермес - Финансовый помощник")
-        fonImage = QImage("background.jpg")
-        fonImage2 = fonImage.scaled(QSize(self.window_height, self.window_width))
         palette = QPalette()
-        palette.setBrush(QPalette.Window, QBrush(fonImage2))
         self.setPalette(palette)
         self.label_4.setText(self.current_version)
         self.pushButton.clicked.connect(self.add_transaction)
