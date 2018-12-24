@@ -49,7 +49,7 @@ class Example(QMainWindow, Ui_MainWindow):
 
     def showStatistics(self):
     	os.popen("statistics.py")
-
+    	
     def showSettings(self):
         os.popen("typesettingswindow.py")
 
